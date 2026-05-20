@@ -1,0 +1,115 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Comprehensive user profile including interests and preferences.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "bio": { "type": "string" },
+        "interests": { "type": "array", "items": { "type": "string" } },
+        "hobbies": { "type": "array", "items": { "type": "string" } },
+        "hometown": { "type": "string" },
+        "occupation": { "type": "string" },
+        "inviteCode": { "type": "string" },
+        "referredBy": { "type": "string" },
+        "premiumExpiry": { "type": "string", "format": "date-time" },
+        "gender": { "type": "string" },
+        "preferences": { "type": "object" },
+        "lastSeenLocation": { "type": "object" },
+        "lastSeenAt": { "type": "string", "format": "date-time" },
+        "isPremium": { "type": "boolean" },
+        "onboardingCompleted": { "type": "boolean" },
+        "hasSeenMatchTutorial": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "displayName"]
+    },
+    "Crossing": {
+      "title": "Crossed Path",
+      "description": "Represents an encounter between two users at a specific location.",
+      "type": "object",
+      "properties": {
+        "participants": { "type": "array", "items": { "type": "string" } },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "location": { "type": "object" },
+        "locationName": { "type": "string" }
+      }
+    },
+    "Like": {
+      "title": "Like Interaction",
+      "description": "One-way interest from one user to another.",
+      "type": "object",
+      "properties": {
+        "fromUid": { "type": "string" },
+        "toUid": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Chat": {
+      "title": "Chat Room",
+      "description": "A conversation between matched users.",
+      "type": "object",
+      "properties": {
+        "participants": { "type": "array", "items": { "type": "string" } },
+        "lastMessage": { "type": "string" },
+        "unreadCount": { "type": "object" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Message": {
+      "title": "ChatMessage",
+      "description": "Individual message in a chat.",
+      "type": "object",
+      "properties": {
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "text": { "type": "string" },
+        "read": { "type": "boolean" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "Push notification data for matches and messages.",
+      "type": "object",
+      "properties": {
+        "toUid": { "type": "string" },
+        "fromUid": { "type": "string" },
+        "type": { "type": "string", "enum": ["match", "message"] },
+        "text": { "type": "string" },
+        "read": { "type": "boolean" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["toUid", "type", "text", "read"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Public and private user profiles."
+    },
+    "/crossings/{crossingId}": {
+      "schema": "Crossing",
+      "description": "Encounters between users."
+    },
+    "/likes/{likeId}": {
+      "schema": "Like",
+      "description": "User likes/interests."
+    },
+    "/chats/{chatId}": {
+      "schema": "Chat",
+      "description": "Active conversations."
+    },
+    "/chats/{chatId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Messages within a chat."
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "User notifications."
+    }
+  }
+}

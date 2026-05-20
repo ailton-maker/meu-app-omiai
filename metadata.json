@@ -1,0 +1,6 @@
+{
+  "name": "Omiai",
+  "description": "App de conexões reais baseado em cruzamentos de caminhos e proximidade física.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
